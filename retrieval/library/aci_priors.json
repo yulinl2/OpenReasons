@@ -1,0 +1,30 @@
+{
+  "_provenance": {
+    "note": "Priors for the third real-paper decomposition (Epic AI): the two DIFFERENT-FIELD results Gibbs & Candes' adaptive conformal inference builds on, lifted into grounded dgroups by an in-session sub-agent. Sharing functor vocabulary with grounding/dgroups/aci_paper.json so set-cover explains the paper as {online no-regret machinery} + {conformal prediction-set machinery} + a residual that is its genuine cross-field contribution: coverage achieved via online no-regret adaptation under distribution shift. Unlike the Nesterov (all-optimization) and counterfactual (all-conformal) decompositions, this one is covered by priors from TWO fields. Grounded; checked by grounding.verify."
+  },
+  "online_no_regret": {
+    "name": "online_no_regret",
+    "text": "An online update with bounded gradient feedback runs a no-regret online procedure over the rounds.",
+    "groundings": {
+      "the_update": "online update",
+      "the_rounds": "the rounds",
+      "the_play": "no-regret online procedure"
+    },
+    "facts": [
+      ["BOUNDED_GRADIENTS", "the_update", "the_rounds"],
+      ["NO_REGRET", "the_play", "the_rounds"],
+      ["CAUSE", ["BOUNDED_GRADIENTS", "the_update", "the_rounds"], ["NO_REGRET", "the_play", "the_rounds"]]
+    ]
+  },
+  "conformal_prediction_set": {
+    "name": "conformal_prediction_set",
+    "text": "A conformal prediction set is built from nonconformity scores.",
+    "groundings": {
+      "the_set": "conformal prediction set",
+      "the_scores": "nonconformity scores"
+    },
+    "facts": [
+      ["CONFORMAL_INTERVAL", "the_set", "the_scores"]
+    ]
+  }
+}
