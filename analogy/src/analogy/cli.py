@@ -47,6 +47,8 @@ def main(argv=None) -> int:
           f"novelty={classic['novelty']['novelty_score']}, "
           f"shortcut={classic['novelty']['shortcut_signal']}")
 
+    if bool(args.base) != bool(args.target):            # half-specified pair -> fail loud
+        ap.error("--base and --target must be given together")
     if args.base and args.target:
         b = examples.from_concept_dgroup(args.base)
         t = examples.from_concept_dgroup(args.target)

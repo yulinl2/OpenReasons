@@ -40,7 +40,12 @@ def normalize_text(text: str) -> NormalizeResult:
 
 
 def normalize(src: str | Path) -> tuple[NormalizeResult, str]:
-    raw = Path(src).read_text(encoding="utf-8") if Path(str(src)).exists() else str(src)
+    # a Path argument is always a file to read — a missing one must fail loud (FileNotFoundError),
+    # never be silently treated as inline content; only a str may be an existing path OR raw text
+    if isinstance(src, Path):
+        raw = src.read_text(encoding="utf-8")
+    else:
+        raw = Path(src).read_text(encoding="utf-8") if Path(src).exists() else src
     return normalize_text(raw), raw
 
 

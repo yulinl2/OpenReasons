@@ -46,14 +46,22 @@ def expr_from_json(node):
     if isinstance(node, str):
         return node
     if isinstance(node, list) and node:
+        if not isinstance(node[0], str):                # the head must be a functor string
+            raise ValueError(f"expression head must be a functor string: {node!r}")
         return (node[0],) + tuple(expr_from_json(x) for x in node[1:])
     raise ValueError(f"bad expression node: {node!r}")
 
 
 def load_library(path: str | Path) -> dict[str, Dgroup]:
     data = json.loads(Path(path).read_text(encoding="utf-8"))
-    return {k: Dgroup(v["name"], [expr_from_json(f) for f in v["facts"]])
-            for k, v in data.items() if not k.startswith("_")}
+    out = {}
+    for k, v in data.items():
+        if k.startswith("_"):
+            continue
+        if not (isinstance(v, dict) and "name" in v and "facts" in v):
+            raise ValueError(f"malformed library entry {k!r}: needs 'name' and 'facts', got {v!r}")
+        out[k] = Dgroup(v["name"], [expr_from_json(f) for f in v["facts"]])
+    return out
 
 
 # ---- retrieval (MAC -> FAC) ----
@@ -78,7 +86,7 @@ def retrieve(target: Dgroup, library: dict[str, Dgroup], mac_k: int = 2) -> dict
     tv = functor_vector(target)
     # MAC: rank on RAW cosine (rounding only for the reported ranking).
     raw = sorted(((name, cosine(tv, functor_vector(dg))) for name, dg in library.items()),
-                 key=lambda kv: -kv[1])
+                 key=lambda kv: (-kv[1], kv[0]))        # name tie-break: deterministic on ties
     raw_lookup = dict(raw)
     mac_ranking = [(name, round(s, 4)) for name, s in raw]
     shortlist = [name for name, _ in raw[:mac_k]]

@@ -101,8 +101,12 @@ def from_concept_dgroup(path: str | Path) -> Dgroup:
     """
     data = json.loads(Path(path).read_text(encoding="utf-8"))
     facts: list = []
-    for a in data.get("attributes", []):           # 1-place predicates
+    for a in data.get("attributes") or []:         # 1-place predicates
+        if "pred" not in a or "arg" not in a:
+            raise ValueError(f"malformed dgroup {path}: attribute needs 'pred' and 'arg': {a!r}")
         facts.append((a["pred"], a["arg"]))
-    for r in data.get("relations", []) + data.get("higher_order", []):
+    for r in (data.get("relations") or []) + (data.get("higher_order") or []):
+        if "pred" not in r:
+            raise ValueError(f"malformed dgroup {path}: relation needs 'pred': {r!r}")
         facts.append((r["pred"], *r.get("args", [])))  # arbitrary arity
     return Dgroup(data.get("slug", "dgroup"), facts)

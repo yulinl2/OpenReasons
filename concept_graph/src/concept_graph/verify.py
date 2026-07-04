@@ -25,8 +25,10 @@ class CheckResult(BaseModel):
 
 
 def check_schema_valid(g: ConceptGraph) -> CheckResult:
+    # validate the JSON-COERCED dump (the real serialized form), not the Python-object dump:
+    # re-validating a live model from model_dump() is trivially true and can never fail.
     try:
-        ConceptGraph.model_validate(g.model_dump())
+        ConceptGraph.model_validate(g.model_dump(mode="json"))
         return CheckResult(name="schema_valid", principle="P3", passed=True)
     except ValidationError as e:  # pragma: no cover
         return CheckResult(name="schema_valid", principle="P3", passed=False, detail=str(e))

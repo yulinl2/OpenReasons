@@ -103,7 +103,10 @@ def build_markdown() -> str:
     w("| A | B | SME score | correspondences |")
     w("|---|---|---|---|")
     for e in sorted(m["analogies"], key=lambda e: -e["score"])[:12]:
-        corr = "; ".join(f"{a}↔{b}" for a, b in list((e["corr"] or {}).items())[:3])
+        items = list((e["corr"] or {}).items())
+        corr = "; ".join(f"{a}↔{b}" for a, b in items[:3])
+        if len(items) > 3:                              # no silent caps: flag the overflow
+            corr += f" (+{len(items) - 3} more)"
         w(f"| `{e['a']}` | `{e['b']}` | {_fmt(e['score'], 1)} | {corr or '—'} |")
     shown = min(12, len(m["analogies"]))
     if len(m["analogies"]) > shown:

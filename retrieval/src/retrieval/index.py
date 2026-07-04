@@ -53,8 +53,10 @@ class MacIndex:
         fell_back = not seen
         if fell_back:                                   # no nearby bucket hit -> exact scan
             seen = set(self.vectors)
-        # rank on RAW cosine (round only for output) so close candidates can't be misordered
-        ranked = sorted(((n, cosine(qvec, self.vectors[n])) for n in seen), key=lambda kv: -kv[1])
+        # rank on RAW cosine (round only for output) so close candidates can't be misordered;
+        # tie-break on name so a cosine tie can't flip with set/hash order (determinism, cf. Epic AD)
+        ranked = sorted(((n, cosine(qvec, self.vectors[n])) for n in seen),
+                        key=lambda kv: (-kv[1], kv[0]))
         return {
             "top_k": [(n, round(s, 4)) for n, s in ranked[:top_k]],
             "candidates_examined": len(seen),
@@ -66,7 +68,8 @@ class MacIndex:
 
 def linear_top_k(qvec: dict, vectors: dict[str, dict], top_k: int = 2) -> list[tuple]:
     """Exact O(N) MAC scan, for correctness comparison against the index."""
-    ranked = sorted(((n, cosine(qvec, v)) for n, v in vectors.items()), key=lambda kv: -kv[1])
+    ranked = sorted(((n, cosine(qvec, v)) for n, v in vectors.items()),
+                    key=lambda kv: (-kv[1], kv[0]))    # name tie-break: deterministic on ties
     return [(n, round(s, 4)) for n, s in ranked[:top_k]]
 
 

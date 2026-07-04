@@ -67,7 +67,10 @@ def discover_role_ascension(*corpora: dict[str, Dgroup]) -> dict:
             for fact in dg.facts:
                 if functor(fact) != "CAUSE":
                     continue
-                premise, conclusion = args(fact)
+                ca = args(fact)
+                if len(ca) != 2:                        # CAUSE is binary (premise -> conclusion)
+                    raise ValueError(f"malformed CAUSE fact (arity {len(ca)}, expected 2): {fact!r}")
+                premise, conclusion = ca
                 _record(is_premise, premise)
                 _record(is_conclusion, conclusion)
     return {fn: f"ROLE::{'P' if is_premise[fn] else ''}{'C' if is_conclusion[fn] else ''}::{arity[fn]}"

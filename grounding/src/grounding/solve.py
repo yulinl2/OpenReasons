@@ -54,14 +54,16 @@ def solve(source_dg, target_dg, raw: dict) -> dict:
             break
 
     structural, numeric = None, None
-    if defining is not None and functor(defining) == "DIVIDES":
+    # guard arity before unpacking: a malformed DIVIDES/EQUALS just yields no structural answer
+    # (None) rather than crashing — the grounding gate checks entities, not relation arity
+    if defining is not None and functor(defining) == "DIVIDES" and len(args(defining)) == 3:
         total, count, _ = args(defining)
         structural = f"{blank_symbol} = {total} ÷ {count}"
         tnum, cnum = _first_int(tg.get(total, "")), _first_int(tg.get(count, ""))
         if tnum is not None and cnum:
             val = tnum // cnum if tnum % cnum == 0 else tnum / cnum
             numeric = _fmt_qty(val, _unit(tg.get(total, "")))
-    elif defining is not None and functor(defining) == "EQUALS":
+    elif defining is not None and functor(defining) == "EQUALS" and len(args(defining)) == 2:
         a, b = args(defining)
         total = b if a == blank_symbol else a
         structural = f"{blank_symbol} = {total} (the whole total, undivided)"

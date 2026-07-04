@@ -82,6 +82,13 @@ def test_gate_fails_on_invalid_verdict():
     assert not rep["passed"] and rep["problems"]
 
 
+def test_gate_does_not_rubber_stamp_an_empty_artifact():
+    # an artifact with no judged conjectures must NOT pass — a gate with nothing to check is
+    # not a green gate (a vacuously-true pass would hide a wiped/empty evaluations file)
+    rep = _verify_mutated(lambda d: d.__setitem__("evaluations", []))
+    assert not rep["passed"] and rep["n_evaluations"] == 0
+
+
 def test_gate_fails_on_ungrounded_projection():
     # a projection the transfer pipeline never generates must be rejected
     rep = _verify_mutated(

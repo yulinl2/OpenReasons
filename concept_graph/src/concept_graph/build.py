@@ -35,6 +35,9 @@ def _parent_id(node_id: str) -> str | None:
 
 
 def _concept_of(node: dict) -> Concept:
+    missing = {"id", "type", "role"} - node.keys()      # fail loud on a malformed node record
+    if missing:
+        raise ValueError(f"node {node.get('id')!r} missing required keys {sorted(missing)}")
     excerpt = (node.get("text") or "")[:160] or None
     name = node.get("title") or node.get("label") or excerpt
     attrs = {
@@ -74,6 +77,9 @@ def build_graph(nodes: list[dict], edges: list[dict], slug: str) -> ConceptGraph
 
     # 1b. structural edges -> cites / refers_to (carry ALL edge attrs => lossless)
     for e in edges:
+        emissing = {"id", "relation", "source", "target"} - e.keys()
+        if emissing:                                    # fail loud on a malformed edge record
+            raise ValueError(f"edge {e.get('id')!r} missing required keys {sorted(emissing)}")
         rel = e["relation"]
         if rel not in ("cites", "refers_to"):
             continue
