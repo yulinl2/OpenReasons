@@ -13,9 +13,12 @@ So this driver does two things and asserts both:
   1. **decompose** (set cover) the paper against its priors — and find it is a genuine
      *cross-field synthesis*: covered by priors from BOTH online learning (``online_no_regret``)
      and conformal prediction (``conformal_prediction_set``), unlike Nesterov (all-optimization)
-     or the counterfactual paper (all-conformal). The novel residual is precisely the
-     ``NO_REGRET -> COVERAGE`` bridge plus its distribution-shift robustness — the contribution
-     neither field alone provides;
+     or the counterfactual paper (all-conformal). The novel residual is the ACI online
+     alpha-update rule (``ONLINE_UPDATE``, from the coverage errors) together with the
+     ``NO_REGRET -> COVERAGE`` bridge and its distribution-shift robustness — the contribution
+     neither field alone provides. (The guarantee is long-run / time-averaged empirical
+     coverage, not per-step marginal coverage — the latter is unattainable under adversarial
+     shift);
   2. **situate cross-domain** — the paper's ``NO_REGRET`` is discovered at the same ``PC/2``
      structural-property role, so the paper is analogous to BOTH the online-learning results and
      the conformal results, sitting at the junction of the two fields. That junction *is* the C6

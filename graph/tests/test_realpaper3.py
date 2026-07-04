@@ -46,6 +46,8 @@ def test_novel_residual_is_the_c6_bridge_and_shift_robustness():
     assert any(r.startswith("CAUSE(NO_REGRET(") and "COVERAGE(" in r for r in dec["residual_facts"])
     assert any(s.startswith("DISTRIBUTION_SHIFT") for s in dec["novel_contributions"])
     assert any(s.startswith("COVERAGE") for s in dec["novel_contributions"])
+    # the ACI online alpha-update rule (from the coverage errors) is part of the contribution too
+    assert any(s.startswith("ONLINE_UPDATE") for s in dec["novel_contributions"])
     # the borrowed conformal machinery (the base set) is NOT in the residual
     assert not any(s.startswith("CONFORMAL_INTERVAL") for s in dec["novel_contributions"])
 
