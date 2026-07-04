@@ -42,10 +42,11 @@ def _real_papers_by_prediction(repo: Path) -> dict:
         prov = raw.get("_provenance", {})
         target = raw.get("target")
         pred = prov.get("predicted_by", "") if isinstance(prov, dict) else ""
-        if not (isinstance(target, dict) and pred):
+        name = target.get("name") if isinstance(target, dict) else None
+        if not (name and pred):                          # skip malformed/partial dgroups
             continue
         for cid in re.findall(r"\bC\d+\b", pred):
-            out[cid] = target["name"]
+            out[cid] = name
     return out
 
 
@@ -62,10 +63,12 @@ def _confirms_structurally(repo: Path, paper_name: str, projection: str) -> bool
         if not (isinstance(tgt, dict) and tgt.get("name") == paper_name):
             continue
         facts = [expr_from_json(f) for f in tgt["facts"]]
-        functors = {functor(f) for f in facts}
-        # the projected mechanism (e.g. NO_REGRET) is present as a real relation in the paper
-        predicted = set(re.findall(r"\b[A-Z][A-Z_]+\b", projection))
-        mechanism_present = bool(predicted & functors)
+        # the projected mechanism (e.g. NO_REGRET) is present as a real, top-level relation in the
+        # paper — excluding CAUSE, the shared glue, so a genuine relation must match, not just the
+        # fact that both the projection and every paper use CAUSE
+        predicted = set(re.findall(r"\b[A-Z][A-Z_]+\b", projection)) - {"CAUSE"}
+        top_level = {functor(f) for f in facts if functor(f) != "CAUSE"}
+        mechanism_present = bool(predicted & top_level)
         # and the paper closes the bridge from that mechanism to the guarantee it earns
         bridge = any(functor(f) == "CAUSE" and functor(args(f)[0]) == "NO_REGRET"
                      and functor(args(f)[1]) == "COVERAGE" for f in facts)
