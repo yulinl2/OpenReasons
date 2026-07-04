@@ -188,6 +188,22 @@ Direction C7 proposed quadratics f_t(x)=½(x−c_t)ᵀdiag(1,κ)(x−c_t) across
 
 The same curvature modulus drives both theorems through a lossy bridge: the informed step contracts geometrically at exactly 1−1/κ while the regret-optimal schedule (stable regret/log T) decays only polynomially (exponent −1) — a **price of robustness** that grows with conditioning and vanishes at κ=1; under drift the informed iterate tracks at exactly δ(κ−1), the contraction-plus-drift interpolation C7 proposed.
 
+## 8. Prediction ledger — the arc closes
+
+The system is not only a novelty/analogy detector but an idea-generation-and-validation engine. Of **7** analogical conjectures it projected and judged (2 plausible, 4 uncertain, 1 implausible), every uncertain one was refined into a research direction and carried to a numerical experiment, and the flagship prediction was confirmed against a real paper:
+
+| conjecture | verdict | fate |
+|---|---|---|
+| C1 — The conformal prediction/calibration procedure has a fix… | plausible | open plausible prediction |
+| C2 — An importance/likelihood-ratio reweighting between distr… | uncertain | → research direction C2 (narrow), `experiment_c2` |
+| C3 — A finite-capacity / complexity-control premise underlies… | implausible | correctly rejected |
+| C4 — The ERM / uniform-convergence operator has a fixed point… | uncertain | → research direction C4 (promising), `experiment_c4` |
+| C5 — The no-regret online play has a fixed point - a limit ob… | uncertain | → research direction C5 (promising), `experiment_c5` |
+| C6 — The weighted conformal calibration procedure is a no-reg… | plausible | **confirmed** by real paper `adaptive_conformal_inference` (structurally verified) |
+| C7 — A curvature (strong-convexity) bound causes the offline… | uncertain | → research direction C7 (narrow), `experiment_c7` |
+
+The climax: **C6** — *"the weighted conformal calibration procedure is a no-regret play"* — was projected by analogy, judged plausible, and then **realized by a real published paper the system had never read** (Gibbs–Candès adaptive conformal inference), whose grounded facts verifiably contain the predicted no-regret play and the `NO_REGRET → COVERAGE` bridge. A prediction made by structure, confirmed by reality.
+
 ## Reproducibility
 
 ```

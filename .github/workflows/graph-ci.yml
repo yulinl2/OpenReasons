@@ -53,6 +53,8 @@ jobs:
         run: PYTHONPATH=graph/src:retrieval/src:analogy/src:grounding/src python -m graphstore.realpaper2
       - name: Third real paper end-to-end (Gibbs-Candes adaptive conformal inference — the C6 prediction)
         run: PYTHONPATH=graph/src:retrieval/src:analogy/src:grounding/src python -m graphstore.realpaper3
+      - name: Prediction ledger (the discover -> predict -> confirm arc, gated end to end)
+        run: PYTHONPATH=graph/src:retrieval/src:analogy/src:grounding/src python -m graphstore.prediction_ledger
       - name: Formal schema — emit + validate the unified graph
         run: PYTHONPATH=graph/src:retrieval/src:analogy/src:grounding/src python -m graphstore.schema
       - name: Tests

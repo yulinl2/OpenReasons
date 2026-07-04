@@ -75,7 +75,7 @@ that discovers analogies *across literatures*, predicts, and self-evaluates.
 make setup        # one venv, pinned deps
 make pipeline     # the capstone: ingest 5 literatures -> analogies -> conjectures -> verdicts
 make query        # interrogate the unified graph
-make test         # all 229 tests across every epic
+make test         # all 240 tests across every epic
 ```
 
 The front-end stages (decompose → ground) run via `make run`; each package's README has its
@@ -115,7 +115,7 @@ library- and proof-scale, and the engine itself is deepened:
 | **proof decomposition** (`retrieval.decompose`) | *depth*: explain a **full proof as a composition** of known theorems (greedy set-cover, MDL) | Q1 proof = Banach + strong-convexity + Kantorovich–Rubinstein, with the ε-sensitivity assumption + iteration bound as the **novel residual** |
 | **deeper SME** (`analogy.align`) | *depth*: **minimal ascension** (near-synonym predicates align via a type lattice) + **skolem-penalized** inferences (opt-in) | `MINIMIZE`≈`OPTIMIZE` now align; defaults unchanged |
 
-**229 tests · 10 CI workflows · all green · reproducible · $0 marginal API cost.**
+**240 tests · 10 CI workflows · all green · reproducible · $0 marginal API cost.**
 
 ## The closed loop (graph layer)
 

@@ -35,6 +35,7 @@ def build_markdown() -> str:
     from graphstore.experiment_c4 import run_experiment as run_c4
     from graphstore.experiment_c5 import run_experiment as run_c5
     from graphstore.experiment_c7 import run_experiment as run_c7
+    from graphstore.prediction_ledger import build_ledger
 
     m = build_model()
     c = m["counts"]
@@ -228,6 +229,39 @@ def build_markdown() -> str:
       "regret/log T) decays only polynomially (exponent −1) — a **price of robustness** that "
       "grows with conditioning and vanishes at κ=1; under drift the informed iterate tracks at "
       "exactly δ(κ−1), the contraction-plus-drift interpolation C7 proposed.")
+    w("")
+
+    # 8. the prediction ledger — the discover -> predict -> confirm arc
+    led = build_ledger(REPO)
+    ls = led["summary"]
+    w("## 8. Prediction ledger — the arc closes")
+    w("")
+    w(f"The system is not only a novelty/analogy detector but an idea-generation-and-validation "
+      f"engine. Of **{ls['n_conjectures']}** analogical conjectures it projected and judged "
+      f"({ls['plausible']} plausible, {ls['uncertain']} uncertain, {ls['implausible']} "
+      f"implausible), every uncertain one was refined into a research direction and carried to a "
+      f"numerical experiment, and the flagship prediction was confirmed against a real paper:")
+    w("")
+    w("| conjecture | verdict | fate |")
+    w("|---|---|---|")
+    for e in led["entries"]:
+        if e["confirmed_by"]:
+            fate = (f"**confirmed** by real paper `{e['confirmed_by']['paper']}` "
+                    f"(structurally verified)")
+        elif e["refined_into"]:
+            fate = (f"→ research direction {e['refined_into']['id']} "
+                    f"({e['refined_into']['scope']}), `{e['experiment'].split('.')[-1]}`")
+        elif e["verdict"] == "plausible":
+            fate = "open plausible prediction"
+        else:
+            fate = "correctly rejected"
+        w(f"| {e['id']} — {e['statement'][:56].rstrip()}… | {e['verdict']} | {fate} |")
+    w("")
+    w(f"The climax: **C6** — *\"the weighted conformal calibration procedure is a no-regret "
+      f"play\"* — was projected by analogy, judged plausible, and then **realized by a real "
+      f"published paper the system had never read** (Gibbs–Candès adaptive conformal inference), "
+      f"whose grounded facts verifiably contain the predicted no-regret play and the "
+      f"`NO_REGRET → COVERAGE` bridge. A prediction made by structure, confirmed by reality.")
     w("")
 
     # footer
