@@ -6,10 +6,14 @@ name: decomposer-ci
 
 on:
   push:
-    branches: ["**"]
+    branches: [main]
     paths: ["decomposer/**", ".github/workflows/decomposer-ci.yml"]
   pull_request:
     paths: ["decomposer/**", ".github/workflows/decomposer-ci.yml"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   verify:
