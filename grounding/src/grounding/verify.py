@@ -19,6 +19,14 @@ def check_section(section: dict) -> dict:
     text = section["text"]
     groundings = section.get("groundings", {})
     facts = section["facts"]
+    # wrong-typed extractor output must be REPORTED, not crash the gate on `.items()` /
+    # `sub not in text` / iteration — validate the shapes before we touch them
+    if not isinstance(text, str):
+        raise ValueError(f"section 'text' must be a string, got {type(text).__name__}")
+    if not isinstance(groundings, dict):
+        raise ValueError(f"section 'groundings' must be a dict, got {type(groundings).__name__}")
+    if not isinstance(facts, list):
+        raise ValueError(f"section 'facts' must be a list, got {type(facts).__name__}")
 
     # 1. every grounding value is a NON-EMPTY verbatim substring of the source text (an
     #    empty/whitespace grounding would trivially pass `"" in text`, a loophole). A non-string

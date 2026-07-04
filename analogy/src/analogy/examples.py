@@ -108,5 +108,8 @@ def from_concept_dgroup(path: str | Path) -> Dgroup:
     for r in (data.get("relations") or []) + (data.get("higher_order") or []):
         if "pred" not in r:
             raise ValueError(f"malformed dgroup {path}: relation needs 'pred': {r!r}")
-        facts.append((r["pred"], *r.get("args", [])))  # arbitrary arity
+        rargs = r.get("args", [])
+        if not isinstance(rargs, list):                 # `"args": null` etc. -> fail loud, don't unpack
+            raise ValueError(f"malformed dgroup {path}: relation 'args' must be a list: {r!r}")
+        facts.append((r["pred"], *rargs))               # arbitrary arity
     return Dgroup(data.get("slug", "dgroup"), facts)

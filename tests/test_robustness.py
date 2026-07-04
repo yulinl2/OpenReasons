@@ -30,6 +30,15 @@ def test_grounding_check_section_missing_key_fails_loud():
             check_section(bad)
 
 
+def test_grounding_check_section_wrong_typed_fields_fail_loud():
+    from grounding.verify import check_section
+    for bad in ({"text": None, "facts": []},                       # text not a str
+                {"text": "t", "facts": [], "groundings": ["x"]},   # groundings not a dict
+                {"text": "t", "facts": "nope"}):                   # facts not a list
+        with pytest.raises(ValueError):
+            check_section(bad)
+
+
 # --- crossdomain: reject a malformed (non-binary) CAUSE ---------------------------------------
 def test_crossdomain_rejects_malformed_cause_arity():
     from analogy.predicates import Dgroup
@@ -71,6 +80,14 @@ def test_from_concept_dgroup_rejects_malformed(tmp_path):
     from analogy import examples
     p = tmp_path / "dg.json"
     p.write_text(json.dumps({"attributes": [{"pred": "P"}], "relations": []}))   # missing 'arg'
+    with pytest.raises(ValueError):
+        examples.from_concept_dgroup(str(p))
+
+
+def test_from_concept_dgroup_rejects_nonlist_args(tmp_path):
+    from analogy import examples
+    p = tmp_path / "dg.json"
+    p.write_text(json.dumps({"relations": [{"pred": "R", "args": None}]}))        # args not a list
     with pytest.raises(ValueError):
         examples.from_concept_dgroup(str(p))
 
