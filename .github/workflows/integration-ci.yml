@@ -3,10 +3,14 @@ name: integration-ci
 # Proves the five epics compose into one working pipeline end-to-end.
 on:
   push:
-    branches: ["**"]
+    branches: [main]
     paths: ["tests/**", "Makefile", "decomposer/**", "concept_graph/**", "matcher/**", "analogy/**", "grounding/**", ".github/workflows/integration-ci.yml"]
   pull_request:
     paths: ["tests/**", "Makefile", "decomposer/**", "concept_graph/**", "matcher/**", "analogy/**", "grounding/**", ".github/workflows/integration-ci.yml"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   integration:

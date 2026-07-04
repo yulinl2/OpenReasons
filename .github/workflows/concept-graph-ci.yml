@@ -5,10 +5,14 @@ name: concept-graph-ci
 
 on:
   push:
-    branches: ["**"]
+    branches: [main]
     paths: ["concept_graph/**", "decomposer/**", ".github/workflows/concept-graph-ci.yml"]
   pull_request:
     paths: ["concept_graph/**", "decomposer/**", ".github/workflows/concept-graph-ci.yml"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   verify:

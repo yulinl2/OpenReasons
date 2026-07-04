@@ -6,10 +6,14 @@ name: graph-ci
 
 on:
   push:
-    branches: ["**"]
+    branches: [main]
     paths: ["graph/**", "retrieval/**", "analogy/**", "grounding/**", ".github/workflows/graph-ci.yml"]
   pull_request:
     paths: ["graph/**", "retrieval/**", "analogy/**", "grounding/**", ".github/workflows/graph-ci.yml"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   verify:

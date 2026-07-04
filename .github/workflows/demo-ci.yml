@@ -5,10 +5,14 @@ name: demo-ci
 
 on:
   push:
-    branches: ["**"]
+    branches: [main]
     paths: ["demo/**", "graph/**", "retrieval/**", "analogy/**", "grounding/**", "docs/**", ".github/workflows/demo-ci.yml"]
   pull_request:
     paths: ["demo/**", "graph/**", "retrieval/**", "analogy/**", "grounding/**", "docs/**", ".github/workflows/demo-ci.yml"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   verify:

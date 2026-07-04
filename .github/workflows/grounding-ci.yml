@@ -6,10 +6,14 @@ name: grounding-ci
 
 on:
   push:
-    branches: ["**"]
+    branches: [main]
     paths: ["grounding/**", "analogy/**", ".github/workflows/grounding-ci.yml"]
   pull_request:
     paths: ["grounding/**", "analogy/**", ".github/workflows/grounding-ci.yml"]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   verify:
