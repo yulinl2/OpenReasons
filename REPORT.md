@@ -35,18 +35,18 @@ Discovered by the structure-mapping engine with **roles read from CAUSE structur
 
 | A | B | SME score | correspondences |
 |---|---|---|---|
-| `margin_generalization` | `bernstein_concentration` | 17.0 | the_bound↔the_bound; the_class↔the_func; the_dim↔the_inputs |
-| `margin_generalization` | `online_strong_convexity` | 17.0 | the_bound↔the_bound; the_class↔the_losses; the_dim↔the_horizon |
-| `bernstein_concentration` | `online_strong_convexity` | 17.0 | the_bound↔the_bound; the_dev↔the_gap; the_func↔the_losses |
-| `gd_strong_convexity` | `margin_generalization` | 12.0 | kappa↔the_dim; the_bound↔the_class; the_map↔the_risk |
-| `gd_strong_convexity` | `vc_generalization` | 12.0 | kappa↔the_dim; the_bound↔the_class; the_map↔the_risk |
-| `gd_strong_convexity` | `bernstein_concentration` | 12.0 | kappa↔the_inputs; the_bound↔the_func; the_map↔the_seq |
-| `gd_strong_convexity` | `mcdiarmid_concentration` | 12.0 | kappa↔the_inputs; the_bound↔the_func; the_map↔the_seq |
-| `gd_strong_convexity` | `online_gradient_descent` | 12.0 | kappa↔the_horizon; the_bound↔the_losses; the_map↔the_play |
-| `gd_strong_convexity` | `online_strong_convexity` | 12.0 | kappa↔the_horizon; the_bound↔the_losses; the_map↔the_play |
-| `margin_generalization` | `mcdiarmid_concentration` | 12.0 | the_bound↔the_bound; the_class↔the_func; the_dim↔the_inputs |
-| `vc_generalization` | `bernstein_concentration` | 12.0 | the_bound↔the_bound; the_class↔the_func; the_dim↔the_inputs |
-| `vc_generalization` | `mcdiarmid_concentration` | 12.0 | the_bound↔the_bound; the_class↔the_func; the_dim↔the_inputs |
+| `margin_generalization` | `bernstein_concentration` | 17.0 | the_bound↔the_bound; the_class↔the_func; the_dim↔the_inputs (+3 more) |
+| `margin_generalization` | `online_strong_convexity` | 17.0 | the_bound↔the_bound; the_class↔the_losses; the_dim↔the_horizon (+3 more) |
+| `bernstein_concentration` | `online_strong_convexity` | 17.0 | the_bound↔the_bound; the_dev↔the_gap; the_func↔the_losses (+3 more) |
+| `gd_strong_convexity` | `margin_generalization` | 12.0 | kappa↔the_dim; the_bound↔the_class; the_map↔the_risk (+2 more) |
+| `gd_strong_convexity` | `vc_generalization` | 12.0 | kappa↔the_dim; the_bound↔the_class; the_map↔the_risk (+2 more) |
+| `gd_strong_convexity` | `bernstein_concentration` | 12.0 | kappa↔the_inputs; the_bound↔the_func; the_map↔the_seq (+2 more) |
+| `gd_strong_convexity` | `mcdiarmid_concentration` | 12.0 | kappa↔the_inputs; the_bound↔the_func; the_map↔the_seq (+2 more) |
+| `gd_strong_convexity` | `online_gradient_descent` | 12.0 | kappa↔the_horizon; the_bound↔the_losses; the_map↔the_play (+2 more) |
+| `gd_strong_convexity` | `online_strong_convexity` | 12.0 | kappa↔the_horizon; the_bound↔the_losses; the_map↔the_play (+2 more) |
+| `margin_generalization` | `mcdiarmid_concentration` | 12.0 | the_bound↔the_bound; the_class↔the_func; the_dim↔the_inputs (+2 more) |
+| `vc_generalization` | `bernstein_concentration` | 12.0 | the_bound↔the_bound; the_class↔the_func; the_dim↔the_inputs (+2 more) |
+| `vc_generalization` | `mcdiarmid_concentration` | 12.0 | the_bound↔the_bound; the_class↔the_func; the_dim↔the_inputs (+2 more) |
 
 *(showing the 12 highest-scoring of 40 analogies.)*
 

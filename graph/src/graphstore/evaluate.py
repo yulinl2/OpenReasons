@@ -141,7 +141,8 @@ def verify(repo: Path) -> dict:
         "grounded_ok": checked,
         "verdict_distribution": dist,
         "problems": problems,
-        "passed": not problems and len(checked) == len(evals),
+        # an empty artifact must NOT pass — a gate with nothing to check is not a green gate
+        "passed": not problems and len(checked) == len(evals) and len(evals) > 0,
     }
 
 

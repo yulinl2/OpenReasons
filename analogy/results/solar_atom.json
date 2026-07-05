@@ -5,6 +5,7 @@
       "anchored_submatches": 3,
       "base_fact": "CAUSE(AND(GREATER(MASS(sun), MASS(planet)), ATTRACTS(sun, planet)), REVOLVES(planet, sun))",
       "entity_overlap": 2,
+      "n_skolems": 0,
       "projection": "CAUSE(AND(GREATER(MASS(nucleus), MASS(electron)), ATTRACTS(nucleus, electron)), REVOLVES(electron, nucleus))",
       "score": 8.0
     },
@@ -12,6 +13,7 @@
       "anchored_submatches": 0,
       "base_fact": "GREATER(TEMPERATURE(sun), TEMPERATURE(planet))",
       "entity_overlap": 2,
+      "n_skolems": 0,
       "projection": "GREATER(TEMPERATURE(nucleus), TEMPERATURE(electron))",
       "score": 2.0
     }

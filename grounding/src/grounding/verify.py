@@ -12,14 +12,27 @@ from .load import entities_in_facts
 
 
 def check_section(section: dict) -> dict:
+    # fail loud on a structurally malformed section rather than KeyError deep inside the gate
+    for k in ("text", "facts"):
+        if k not in section:
+            raise ValueError(f"section missing required key {k!r}")
     text = section["text"]
     groundings = section.get("groundings", {})
     facts = section["facts"]
+    # wrong-typed extractor output must be REPORTED, not crash the gate on `.items()` /
+    # `sub not in text` / iteration — validate the shapes before we touch them
+    if not isinstance(text, str):
+        raise ValueError(f"section 'text' must be a string, got {type(text).__name__}")
+    if not isinstance(groundings, dict):
+        raise ValueError(f"section 'groundings' must be a dict, got {type(groundings).__name__}")
+    if not isinstance(facts, list):
+        raise ValueError(f"section 'facts' must be a list, got {type(facts).__name__}")
 
-    # 1. every grounding value is a NON-EMPTY verbatim substring of the source text
-    #    (an empty/whitespace grounding would trivially pass `"" in text`, a loophole).
+    # 1. every grounding value is a NON-EMPTY verbatim substring of the source text (an
+    #    empty/whitespace grounding would trivially pass `"" in text`, a loophole). A non-string
+    #    grounding value (JSON null/number) is malformed extractor output -> report it, don't crash.
     bad_substrings = sorted(s for s, sub in groundings.items()
-                            if not sub.strip() or sub not in text)
+                            if not isinstance(sub, str) or not sub.strip() or sub not in text)
     # 2. every entity used in the facts is grounded
     used = entities_in_facts(facts)
     ungrounded = sorted(e for e in used if e not in groundings)

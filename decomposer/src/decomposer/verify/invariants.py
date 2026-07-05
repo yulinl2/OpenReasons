@@ -26,11 +26,14 @@ class CheckResult(BaseModel):
 
 
 def check_schema_valid(decomp: Decomposition) -> CheckResult:
-    """P3 — the bundle round-trips through its own declared schema."""
+    """P3 — the bundle round-trips through its own declared schema. Validate the JSON-COERCED
+    dump (mode="json": enums->values, dates->strings — the actual serialized form), NOT the
+    Python-object dump: re-validating a live model from model_dump() is trivially true and can
+    never fail, whereas the JSON form exercises the real serialize->reparse contract."""
     try:
-        Decomposition.model_validate(decomp.model_dump())
+        Decomposition.model_validate(decomp.model_dump(mode="json"))
         return CheckResult(name="schema_valid", principle="P3", passed=True,
-                           detail="bundle validates against Pydantic schema")
+                           detail="bundle validates against Pydantic schema (JSON round-trip)")
     except ValidationError as e:  # pragma: no cover - defensive
         return CheckResult(name="schema_valid", principle="P3", passed=False, detail=str(e))
 
