@@ -1,0 +1,23 @@
+[project]
+name = "openpriors-graph"
+version = "0.1.0"
+description = "OpenPriors Epics M–AJ: the unified (object, attribute, relation) graph store — cross-domain lineage, unsupervised role-ascension analogy discovery, analogical conjecture transfer, the in-session conjecture-evaluation gate, and the prediction ledger that closes the discover -> predict -> confirm loop."
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["openpriors-analogy", "openpriors-retrieval"]  # wire via PYTHONPATH in this monorepo
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+graphstore = "graphstore.cli:main"
+graphstore-pipeline = "graphstore.pipeline:main"
+graphstore-query = "graphstore.dsl_cli:main"
+graphstore-ledger = "graphstore.prediction_ledger:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,52 @@
+name: consolidation-ci
+
+# Epic AL: the cross-cutting gate. Two claims that no per-package workflow checks:
+#   suite   — the whole root tests/ dir runs green (integration + entrypoints + robustness +
+#             packaging consistency + unified-CLI dispatch + the DEMONSTRATION.md staleness gate)
+#   package — every package actually builds a wheel and `openpriors[all]` installs, imports, and
+#             runs from those wheels outside the source tree
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  # No paths filter, by design: this is the cross-cutting gate. The suite's DEMONSTRATION.md
+  # staleness check recomputes the transcript live from run_pipeline + build_ledger, which read
+  # essentially every package's src AND the committed corpora (retrieval/library, grounding/dgroups,
+  # graph/evaluations). A narrow paths filter would let a pipeline-source or corpus edit stale the
+  # transcript without ever re-running the gate — so this workflow runs on every push/PR.
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+jobs:
+  suite:
+    runs-on: ubuntu-latest
+    env:
+      SOURCE_DATE_EPOCH: "1735689600"   # reproducible artifacts (DEMONSTRATION.md byte-stability)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r decomposer/requirements.txt pytest
+      - name: Whole root test suite (integration, entrypoints, robustness, packaging, CLI)
+        run: |
+          PYTHONPATH=decomposer/src:concept_graph/src:matcher/src:analogy/src:grounding/src:retrieval/src:graph/src:. \
+            python -m pytest tests/ -q
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Build every wheel + verify a fresh-venv install/import/run
+        run: |
+          python -m pip install --upgrade pip
+          bash scripts/verify_packaging.sh
