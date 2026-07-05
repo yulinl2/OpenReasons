@@ -39,10 +39,23 @@ def test_unknown_verb_is_rc_2(capsys):
 
 
 def test_bootstrap_pins_reproducible_epoch():
-    # `openpriors run` regenerates timestamped artifacts; the CLI must pin SOURCE_DATE_EPOCH the
-    # same way the Makefile does, or those artifacts churn on the wall clock and drift silently.
+    # `openpriors run` regenerates timestamped artifacts; the CLI must DEFAULT SOURCE_DATE_EPOCH
+    # the same way the Makefile does, or those artifacts churn on the wall clock and drift.
+    # Verify the setdefault behavior directly (with the var unset) so the test doesn't depend on
+    # whatever the ambient environment happens to set — setdefault deliberately preserves an
+    # explicit override, which a bare equality assert would flag as a failure.
+    import importlib
     import os
-    assert os.environ.get("SOURCE_DATE_EPOCH") == "1735689600"
+    saved = os.environ.pop("SOURCE_DATE_EPOCH", None)
+    try:
+        import openpriors._bootstrap as bootstrap
+        importlib.reload(bootstrap)          # re-runs the module-level setdefault with the var unset
+        assert os.environ.get("SOURCE_DATE_EPOCH") == "1735689600"
+    finally:
+        if saved is not None:
+            os.environ["SOURCE_DATE_EPOCH"] = saved
+        else:
+            os.environ.pop("SOURCE_DATE_EPOCH", None)
 
 
 def test_version_lists_all_packages(capsys):

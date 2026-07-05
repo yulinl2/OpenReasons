@@ -12,12 +12,15 @@ set -euo pipefail
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
 DIST="$REPO/dist"
 PKGS=(analogy concept_graph decomposer grounding matcher retrieval graph .)
+# Tie the wheel build to one explicit interpreter (override with PYTHON=...), so on a machine
+# with several Pythons the build and the venv can't diverge onto different interpreters.
+PYTHON="${PYTHON:-python3}"
 
 echo "== [1/3] building wheels into $DIST =="
 rm -rf "$DIST"; mkdir -p "$DIST"
 for p in "${PKGS[@]}"; do
   echo "  -> $p"
-  pip wheel --no-deps --no-build-isolation -w "$DIST" "$REPO/$p" >/dev/null
+  "$PYTHON" -m pip wheel --no-deps --no-build-isolation -w "$DIST" "$REPO/$p" >/dev/null
 done
 n=$(find "$DIST" -maxdepth 1 -name 'openpriors*.whl' | wc -l | tr -d ' ')
 echo "  built $n wheels"
@@ -27,7 +30,7 @@ if [ "${1:-}" = "--build-only" ]; then echo "build-only: OK"; exit 0; fi
 
 echo "== [2/3] fresh-venv install =="
 VENV="$(mktemp -d)/venv"
-python3 -m venv "$VENV"
+"$PYTHON" -m venv "$VENV"
 # local wheels resolve via --find-links; pydantic/lxml/pylatexenc come from the index
 "$VENV/bin/pip" install -q -U pip
 "$VENV/bin/pip" install -q --find-links "$DIST" "openpriors[all]"
