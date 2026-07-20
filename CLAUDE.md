@@ -1,3 +1,13 @@
+<!--
+provenance:
+  file: openpriors/CLAUDE.md
+  role: instrument-side constitution, amendments integrated
+  version: 2026-07-18 (authoritative history: LOG.md and git once committed)
+  generator: Claude (Fable 5, claude-fable-5) via claude.ai
+  conversation: metaproof-founding-2026-07 — https://claude.ai/chat/65ec034b-6d86-4ccc-b995-70fbb3c22e74
+  archived: 2026-07-20
+-->
+
 # CLAUDE.md — OpenPriors · Constitution (instrument side)
 
 > **Constitutional** (deny-guarded; amendments = standalone PR + `constitution-amendment`
