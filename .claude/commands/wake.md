@@ -1,3 +1,13 @@
+<!--
+provenance:
+  file: openpriors/.claude/commands/wake.md
+  role: /wake session re-anchor ritual (identical to MetaProof copy)
+  version: 2026-07-18 (authoritative history: LOG.md and git once committed)
+  generator: Claude (Fable 5, claude-fable-5) via claude.ai
+  conversation: metaproof-founding-2026-07 — https://claude.ai/chat/65ec034b-6d86-4ccc-b995-70fbb3c22e74
+  archived: 2026-07-20
+-->
+
 # /wake — session re-anchor (slash command or paste-prompt)
 # Drop this file into `.claude/commands/wake.md` in BOTH repos.
 # Design invariant: this prompt contains zero project state — it is a pure pointer.
