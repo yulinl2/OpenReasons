@@ -1,3 +1,13 @@
+<!--
+provenance:
+  file: openpriors/docs/founding-request.md
+  role: archived founding request, historical record; authority superseded per constitution
+  version: 2026-07-18 (original text 2026-06) (authoritative history: LOG.md and git once committed)
+  generator: Claude (Fable 5, claude-fable-5) via claude.ai
+  conversation: metaproof-founding-2026-07 — https://claude.ai/chat/65ec034b-6d86-4ccc-b995-70fbb3c22e74
+  archived: 2026-07-20
+-->
+
 # docs/founding-request.md — the founding request (archived verbatim, 2026-06)
 
 > Archived for provenance. Authority: superseded by CLAUDE.md's Precedence section

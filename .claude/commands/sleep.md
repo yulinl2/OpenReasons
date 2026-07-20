@@ -1,3 +1,13 @@
+<!--
+provenance:
+  file: openpriors/.claude/commands/sleep.md
+  role: /sleep epic-close ritual (identical to MetaProof copy)
+  version: 2026-07-18 (authoritative history: LOG.md and git once committed)
+  generator: Claude (Fable 5, claude-fable-5) via claude.ai
+  conversation: metaproof-founding-2026-07 — https://claude.ai/chat/65ec034b-6d86-4ccc-b995-70fbb3c22e74
+  archived: 2026-07-20
+-->
+
 # /sleep — epic-close compression ritual (slash command or paste-prompt)
 # Drop into `.claude/commands/sleep.md` in BOTH repos. Wake solves; sleep compresses.
 # Zero project state in this file — pure pointer; all state lives on disk.
