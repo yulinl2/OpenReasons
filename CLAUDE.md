@@ -1,6 +1,6 @@
 # CLAUDE.md — session bootstrap for OpenReasons
 
-This repository has no bootstrap file of its own yet; this is a minimal one, added 2026-09-28 (MetaSci issue #30)
+This repository had no bootstrap file of its own until this minimal one was added 2026-09-28 (MetaSci issue #30),
 so the owner's standing instructions have somewhere durable to live instead of being pasted by hand each session.
 
 1. **Read MetaProof `ledgers/OWNER-POLICY.md` first** — the owner's standing operating instructions across all
