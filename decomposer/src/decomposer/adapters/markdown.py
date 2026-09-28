@@ -22,7 +22,10 @@ _HEADING = re.compile(r"^(#{1,6})\s+(.*?)\s*#*$")
 _THEMATIC = re.compile(r"^\s*(?:-{3,}|\*{3,}|_{3,}|[—–]+)\s*$")
 _FENCE = re.compile(r"^\s*(```+|~~~+)(.*)$")
 _LISTITEM = re.compile(r"^(\s*)(?:[-*+]|\d+[.)])\s+(.*)$")
-_METAFIELD = re.compile(r"^\*{0,2}([A-Z][^:*]{0,60}?):\*{0,2}\s*(.*)$")
+# The closing marker must match the opening one (\1) so a colon that merely falls
+# inside a bolded run (e.g. "**Gu & Dao, arXiv:2312.00752.**") isn't mistaken for the
+# "**Key:**" form-field shape's own closing bold, which sits right at the colon.
+_METAFIELD = re.compile(r"^(\*{0,2})([A-Z][^:*]{0,60}?):\1\s*(.*)$")
 _BLANK = re.compile(r"^\s*$")
 
 
@@ -125,11 +128,17 @@ def _parse_blocks(text: str) -> list[_Block]:
                     s = offs[i]
                     mf = _METAFIELD.match(body)
                     if mf:  # "Key: value" form => a form field
-                        items.append(_Block("metadata_field", mf.group(1).strip(), None,
-                                            s, s + len(lines[i]), mf.group(2).strip()))
+                        items.append(_Block("metadata_field", mf.group(2).strip(), None,
+                                            s, s + len(lines[i]), mf.group(3).strip()))
                     else:
                         items.append(_Block("list_item", None, None, s,
                                             s + len(lines[i]), body.strip()))
+                elif items:  # a hard-wrapped continuation line of the previous item
+                    last = items[-1]
+                    cont = lines[i].strip()
+                    if cont:
+                        last.text = f"{last.text} {cont}".strip()
+                    last.end = offs[i] + len(lines[i])
                 i += 1
             lst = _Block("list", None, None, items[0].start if items else start,
                          items[-1].end if items else start + len(line), "")
