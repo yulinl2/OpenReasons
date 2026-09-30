@@ -71,15 +71,37 @@ that discovers analogies *across literatures*, predicts, and self-evaluates.
 
 ## Run the whole thing
 
+The seven packages are consolidated behind **one command** — no per-package `PYTHONPATH`
+incantations:
+
 ```bash
-make setup        # one venv, pinned deps
-make pipeline     # the capstone: ingest 5 literatures -> analogies -> conjectures -> verdicts
-make query        # interrogate the unified graph
-make test         # all 240 tests across every epic
+make setup                # one venv, pinned deps
+make demonstrate          # ← start here: the whole arc in one narrated, reproducible run
 ```
 
-The front-end stages (decompose → ground) run via `make run`; each package's README has its
-own runnable demos and `PYTHONPATH` one-liners.
+`make demonstrate` recomputes the entire **discover → predict → confirm** loop live and writes
+[`DEMONSTRATION.md`](DEMONSTRATION.md). Under the hood it's the unified `openpriors` CLI, which
+drives every stage:
+
+```bash
+openpriors demonstrate    # narrated end-to-end run (writes DEMONSTRATION.md)
+openpriors pipeline       # the capstone: 5 literatures -> analogies -> conjectures -> verdicts
+openpriors query ...      # interrogate the unified graph
+openpriors experiment     # run every research-direction experiment (C2, C4, C5, C7)
+openpriors ledger         # the prediction ledger: discover -> predict -> confirm
+openpriors run            # front end: decompose -> concept graph -> match -> ground
+openpriors version        # every consolidated package
+```
+
+Install it as a real package (`openpriors` on your `PATH`, every sub-package importable):
+
+```bash
+make install              # editable-install all 8 packages
+make package              # build every wheel + verify a fresh-venv install (the packaging gate)
+make test                 # the whole suite across every epic + the cross-cutting gates
+```
+
+Each package also has its own README with runnable demos and `PYTHONPATH` one-liners.
 
 ## How it's built (governance)
 
@@ -115,17 +137,18 @@ library- and proof-scale, and the engine itself is deepened:
 | **proof decomposition** (`retrieval.decompose`) | *depth*: explain a **full proof as a composition** of known theorems (greedy set-cover, MDL) | Q1 proof = Banach + strong-convexity + Kantorovich–Rubinstein, with the ε-sensitivity assumption + iteration bound as the **novel residual** |
 | **deeper SME** (`analogy.align`) | *depth*: **minimal ascension** (near-synonym predicates align via a type lattice) + **skolem-penalized** inferences (opt-in) | `MINIMIZE`≈`OPTIMIZE` now align; defaults unchanged |
 
-**240 tests · 10 CI workflows · all green · reproducible · $0 marginal API cost.**
+**Full test suite green across every epic · 11 CI workflows · reproducible · $0 marginal API cost.**
 
 ## The closed loop (graph layer)
 
-The graph layer (M–U) is where the project's thesis lands: one unified graph over **four
-literatures** (conformal prediction, optimization, learning theory, martingale concentration)
-that the system reasons over end to end. `make pipeline` prints it in one pass:
+The graph layer (M–U) is where the project's thesis lands: one unified graph over **five
+literatures** (conformal prediction, optimization, learning theory, martingale concentration,
+online learning / regret) that the system reasons over end to end. `openpriors pipeline` (aka
+`make pipeline`) prints it in one pass:
 
 | Stage | What it does | Result |
 |---|---|---|
-| **unify** (`graphstore.pipeline`) | one (object, attribute, relation) graph, reified facts | 278 nodes, 512 edges, every fact losslessly reconstructable |
+| **unify** (`graphstore.pipeline`) | one (object, attribute, relation) graph, reified facts | 363 nodes, 665 edges, every fact losslessly reconstructable |
 | **lineage** | recover each field's development line | `split → weighted → counterfactual` conformal; analogous chains in optimization, learning & concentration |
 | **analogy** (`crossdomain`, `multidomain`) | discover cross-domain analogies, **roles read from CAUSE structure, unsupervised** | *weighted-exchangeability : coverage :: contraction : convergence :: uniform-convergence : generalization :: bounded-martingale : concentration* — zero hand-coded knowledge, a 4th field joins with no new design |
 | **transfer** (`transfer`) | project candidate inferences as conjectures | *"by analogy with Banach, the conformal procedure has a **fixed point**"* (an invented object) |

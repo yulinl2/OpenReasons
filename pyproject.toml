@@ -1,0 +1,41 @@
+[project]
+name = "openpriors"
+version = "0.1.0"
+description = "OpenPriors — read scientific results, represent their reasoning as an (object, attribute, relation) graph, and use structure mapping to judge novelty, trace lineage, find cross-field analogies, conjecture what they predict, and confirm those predictions against reality. This meta-package consolidates the seven monorepo packages behind one `openpriors` command."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "see repository LICENSE" }
+authors = [{ name = "OpenPriors" }]
+keywords = ["structure-mapping", "analogy", "novelty-detection", "reasoning-graph", "scientific-discovery"]
+
+# The dispatcher is pure-stdlib and bootstraps the seven in-tree packages onto sys.path, so the
+# meta-package itself has no hard runtime dependency (it runs from a fresh clone with nothing
+# installed). The components it consolidates are listed under the `all` extra; `make install`
+# path-installs every package in one pip invocation so the inter-package deps resolve locally.
+dependencies = []
+
+[project.optional-dependencies]
+all = [
+    "openpriors-analogy",
+    "openpriors-concept-graph",
+    "openpriors-decomposer",
+    "openpriors-grounding",
+    "openpriors-matcher",
+    "openpriors-retrieval",
+    "openpriors-graph",
+]
+dev = ["pytest>=7", "build"]
+
+[project.scripts]
+openpriors = "openpriors.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/yulinl2/OpenPriors"
+Demonstration = "https://demo.open-priors.org/"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["openpriors"]

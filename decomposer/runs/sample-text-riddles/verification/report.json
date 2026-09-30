@@ -2,7 +2,7 @@
   "all_passed": true,
   "checks": [
     {
-      "detail": "bundle validates against Pydantic schema",
+      "detail": "bundle validates against Pydantic schema (JSON round-trip)",
       "metrics": {},
       "name": "schema_valid",
       "passed": true,

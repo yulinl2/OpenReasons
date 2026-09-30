@@ -31,7 +31,7 @@
     "conserved": "statement/answer-key separability; bib identity",
     "principle": "P5",
     "question": "task-specific (exam/paper)",
-    "target": "answer_key & problem_statement distinct subtrees; bib_reference per \\bibitem",
+    "target": "answer_key & problem_statement distinct subtrees; one bib_reference per bibliography entry (\\bibitem / ltx_bibitem)",
     "verifier": "type_counts inspection + differential HTML oracle"
   }
 ]
