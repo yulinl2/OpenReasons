@@ -1,5 +1,7 @@
 # OpenPriors
 
+> New session, no instructions? Start at MetaProof `ledgers/ROOT-SEED.md` ( https://github.com/yulinl2/MetaProof/blob/main/ledgers/ROOT-SEED.md ), first screen, then this file (the owner, 2026-10-04; MetaProof #263).
+
 > *Open-source your ideas, not just your code.*
 
 OpenPriors reads scientific results, represents their **reasoning** as an (object, attribute,
