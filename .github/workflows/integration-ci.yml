@@ -33,6 +33,8 @@ jobs:
           PYTHONPATH=matcher/src:concept_graph/src python -m matcher.cli
           PYTHONPATH=analogy/src        python -m analogy.cli
           PYTHONPATH=grounding/src:analogy/src python -m grounding.cli
+      - name: Front-end artifacts are reproducible (committed outputs match a fresh run)
+        run: git diff --exit-code
       - name: Cross-epic integration test
         run: |
           PYTHONPATH=decomposer/src:concept_graph/src:matcher/src:analogy/src:grounding/src \

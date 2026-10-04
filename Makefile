@@ -5,7 +5,7 @@
 #   make query     interrogate the unified graph    make test  every epic's tests
 #   make demo      rebuild the interactive dashboard docs/index.html from live output
 # Usage:  make setup  &&  make pipeline  &&  make test
-.PHONY: setup run pipeline query demo report experiment test integration clean
+.PHONY: setup install package run pipeline query demonstrate demo report experiment test integration clean
 
 VENV := decomposer/.venv
 PY   := $(VENV)/bin/python
@@ -18,6 +18,14 @@ setup:
 	$(PY) -m pip install -q -U pip
 	$(PY) -m pip install -q -r decomposer/requirements.txt pytest
 
+install:                   ## editable-install every package so the `openpriors` command is on PATH
+	$(PY) -m pip install -e ./analogy -e ./concept_graph -e ./decomposer -e ./grounding \
+	  -e ./matcher -e ./retrieval -e ./graph -e .
+
+package:                   ## build every wheel + verify a fresh-venv install/import (packaging gate)
+	$(PY) -m pip install -q -U pip
+	bash scripts/verify_packaging.sh
+
 run:                       ## run the front-end pipeline (decompose -> ground)
 	PYTHONPATH=decomposer/src     $(PY) -m decomposer.cli
 	PYTHONPATH=concept_graph/src  $(PY) -m concept_graph.cli
@@ -25,7 +33,7 @@ run:                       ## run the front-end pipeline (decompose -> ground)
 	PYTHONPATH=analogy/src        $(PY) -m analogy.cli
 	PYTHONPATH=grounding/src:analogy/src $(PY) -m grounding.cli
 
-pipeline:                  ## the capstone: full graph pipeline over three literatures, one summary
+pipeline:                  ## the capstone: full graph pipeline over five literatures, one summary
 	PYTHONPATH=$(GPP) $(PY) -m graphstore.pipeline
 
 query:                     ## interrogate the unified graph (path / ancestor / analogy / conjecture)
@@ -43,10 +51,13 @@ demo:                      ## rebuild the interactive dashboard docs/index.html 
 report:                    ## regenerate REPORT.md — the consolidated audit report, live from the pipeline
 	PYTHONPATH=demo:$(GPP) $(PY) report/build_report.py
 
-test:                      ## run every epic's unit tests + the integration test
-	PYTHONPATH=$(PP) $(PY) -m pytest \
+demonstrate:               ## the whole arc in one narrated, reproducible run (writes DEMONSTRATION.md)
+	$(PY) -m openpriors.cli demonstrate
+
+test:                      ## run every epic's unit tests + all cross-cutting root tests/
+	PYTHONPATH=$(PP):. $(PY) -m pytest \
 	  decomposer/tests concept_graph/tests matcher/tests analogy/tests grounding/tests \
-	  retrieval/tests graph/tests tests/test_integration.py -q
+	  retrieval/tests graph/tests tests/ -q
 
 integration:               ## just the cross-epic composition test
 	PYTHONPATH=$(PP) $(PY) -m pytest tests/test_integration.py -q
