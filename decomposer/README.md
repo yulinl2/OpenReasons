@@ -1,8 +1,8 @@
-# OpenPriors · decomposer
+# OpenReasons · decomposer
 
 **A generic, first-principles, independently-verified document-decomposition workflow.**
 Raw documents (LaTeX papers, custom-macro exams, plain-prose riddles, metadata forms) →
-clean, **nested, hierarchical** structured data — the upstream stage of OpenPriors'
+clean, **nested, hierarchical** structured data — the upstream stage of the source-linked claim/relational encoder's
 `(object, attribute, relation)` concept/reasoning graph.
 
 > Built to the brief: maximize performance & compute-efficiency while staying *easy to
