@@ -32,23 +32,35 @@ def test_every_conjecture_is_judged_and_the_judge_discriminates():
     assert LED["summary"]["implausible"] >= 1 and LED["summary"]["plausible"] >= 1
 
 
-def test_every_uncertain_conjecture_is_refined_and_experimented():
+def test_every_uncertain_conjecture_has_a_runnable_module_not_a_claimed_result():
     uncertain = [e for e in LED["entries"] if e["verdict"] == "uncertain"]
     assert uncertain
     for e in uncertain:
         assert e["refined_into"] is not None, e["id"]
         assert e["experiment"] and e["experiment"].startswith("graphstore.experiment_"), e["id"]
-    # the count is self-consistent
-    assert LED["summary"]["refined_into_directions"] == LED["summary"]["backed_by_experiment"] \
-        == len(uncertain)
+    # A runnable module exists; **nothing in this ledger proves it ran**.
+    assert LED["summary"]["refined_into_directions"] == len(uncertain)
+    assert LED["summary"]["available_experiment_modules"] == len(uncertain)
+    assert LED["summary"]["backed_by_experiment"] == 0
+    for e in uncertain:
+        assert e["experiment_evidence"] == {
+            "module_present": True, "executed": False,
+            "outcome_recorded": False, "independently_validated": False,
+        }
 
-
-def test_flagship_prediction_c6_is_structurally_confirmed_by_the_real_paper():
+def test_c6_is_post_hoc_structural_match_not_independent_confirmation():
     c6 = BY_ID["C6"]
     assert c6["verdict"] == "plausible"
     assert c6["confirmed_by"] is not None
     assert c6["confirmed_by"]["paper"] == "adaptive_conformal_inference"
     assert c6["confirmed_by"]["structurally_verified"] is True
+    assert c6["confirmed_by"]["evidence_type"] == "post_hoc_structural_match"
+    assert c6["confirmed_by"]["independent_confirmation"] is False
+    assert c6["paper_evidence"] == {
+        "post_hoc_structural_match": True, "independent_confirmation": False,
+    }
+    assert LED["summary"]["post_hoc_paper_matches"] >= 1
+    assert LED["summary"]["confirmed_by_real_paper"] == 0
     # the confirmation was discovered from the paper's own provenance, generically
     assert _real_papers_by_prediction(REPO).get("C6") == "adaptive_conformal_inference"
 
@@ -67,3 +79,16 @@ def test_plausible_but_unconfirmed_predictions_stay_open():
     # C1 (conformal has a fixed point) is plausible but not tied to an ingested paper -> open
     c1 = BY_ID["C1"]
     assert c1["verdict"] == "plausible" and c1["confirmed_by"] is None
+
+
+def test_fail_closed_evidence_states_even_when_modules_and_matches_exist():
+    """A module import or curated match cannot manufacture experimental proof."""
+    summary = LED["summary"]
+    assert summary["available_experiment_modules"] > 0
+    assert summary["experiments_executed_with_evidence"] == 0
+    assert summary["experiment_outcomes_recorded"] == 0
+    assert summary["independently_validated_experiments"] == 0
+    assert summary["post_hoc_paper_matches"] > 0
+    assert summary["independent_paper_confirmations"] == 0
+    assert summary["backed_by_experiment"] == 0
+    assert summary["confirmed_by_real_paper"] == 0
