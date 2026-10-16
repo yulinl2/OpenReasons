@@ -53,12 +53,11 @@ def build_markdown() -> str:
       "experiment-module presence does not establish semantic claim completeness, "
       "empirical outcome, or independent discovery.")
     w("")
-    w("OpenReasons reads a body of mathematical results as one typed *(object, attribute, relation)* "
-      "graph and runs a closed research loop over it: **discover → predict → evaluate → investigate "
-      "→ experiment**. It situates each result among its priors, finds what it is structurally "
-      "analogous to in another field, predicts what that analogy implies, tells the sound "
-      "predictions from the spurious, refines the open ones into research directions, and runs their "
-      "proposed numerical experiments — every step grounded and CI-gated.")
+    w("The OpenReasons **experimental graph layer** processes a curated set of "
+      "typed relational records. It demonstrates structure mapping, lineage hypotheses, "
+      "analogy transfer, stored conjecture verdicts and experiment **module** inventory. "
+      "This is a reproducible fixture-level workflow; it neither establishes general "
+      "semantic claim extraction nor validates prospective scientific predictions.")
     w("")
     w(f"At a glance: **{c['literatures']} literatures**, **{c['results']} results**, "
       f"**{c['analogies']} cross-domain analogies**, **{c['conjectures']} judged conjectures**, "
