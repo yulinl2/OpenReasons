@@ -1,4 +1,4 @@
-# OpenPriors — Roadmap & development governance
+# OpenReasons — Instrument roadmap & development governance
 
 > *Open-source your ideas, not just your code.* This file is the project's planning and
 > governance layer: the task hierarchy, the branch/iteration strategy, the supervision
@@ -6,6 +6,9 @@
 > autonomously without losing auditability or safety.
 
 ## 1. The north star
+
+**Owner priority:** claim/document decomposition and formal encoding of source-linked structures; complete semantic claim extraction remains open. Later analogy, retrieval and novelty modules are secondary research instruments, not completion of the separate OpenPriors research objective.
+
 
 A package that **formally represents the concepts and reasoning chains of a text** as an
 `(object, attribute, relation)` node/edge graph — the substrate a structure-mapping
@@ -110,7 +113,7 @@ the **Argue / Build / Verify** triad and is recorded under `<pkg>/runs/` or `<pk
 | T · top-level legibility | ✅ merged (#27) | root **README + Makefile** present the full A→S story as one system; `make setup && make pipeline && make query && make test` — the repo reads top-to-bottom and the capstone runs in one command |
 | U · fourth literature | ✅ merged (#28) | **martingale concentration** (McDiarmid/Bernstein) joins the analogy web with **zero new design**: its `BOUNDED_MARTINGALE` is auto-discovered as the same `PC/2` structural-property role → the **4-way** analogy *…:: bounded-martingale : concentration*. Pipeline now 4 literatures / 278 nodes / 24 analogies; lineage `bernstein → mcdiarmid` |
 | V · second real paper | ✅ merged (#29) | **Nesterov's accelerated gradient** (sub-agent-lifted) end-to-end in optimization, like K in conformal: set-cover reads the *estimate-sequence* as borrowed and isolates **`OPTIMAL_RATE`** as the contribution; its momentum step is discovered at the same `PC/2` role so the paper joins the cross-domain web (*Nesterov : acceleration :: contraction : convergence*) |
-| W · per-result novelty | ✅ merged (#30) | the novelty-detector thesis at graph scale: every result node gets a precise **novelty = 1 − best-prior coverage** (the prior must be no larger, so a descendant can't cover its ancestor); scores match the validated lineage/papers exactly (paper 0.22, base results 1.0). `dsl.novelty_of` / `most_novel` |
+| W · per-result novelty | ✅ merged (#30) | a matched-fact coverage proxy at graph scale: every result node gets **1 − best-prior coverage** under an encoded-fact size heuristic, not a validated conceptual/MDL novelty measure (the prior must be no larger, so a descendant can't cover its ancestor); scores match the validated lineage/papers exactly (paper 0.22, base results 1.0). `dsl.novelty_of` / `most_novel` |
 | X · formal graph schema | ✅ merged (#31) | the end-goal artifact made **rigorous**: emitted draft-2020-12 **JSON Schema** + a dependency-free validator enforcing kinds/required-attrs/relations **plus referential integrity + arg-edge contiguity**; the capstone graph validates in CI; validator unit-tested to fail on each violation |
 | Y · discovery loop | ✅ merged (#32) | **evaluate → investigate**: the *uncertain*-judged conjectures refined by an in-session sub-agent into precise, citation-grounded **research directions** (sharpened statement / what's established / open question / next step), gated to anchor on real open conjectures. The "ERM operator fixed point" conjecture becomes a *fixed-point uniform-convergence* program (Balakrishnan–Wainwright–Yu) |
 | Z · run the experiment | ✅ merged (#33) | **investigate → experiment**: the system runs research direction C2's own proposed test — pure-Python finite-MDP numerics confirming the L2(mu) contraction modulus = `gamma` at `mu=d` (Bertsekas–Tsitsiklis) and rising **monotonically with `chi^2(d‖mu)`** until contraction breaks. A proposed direction backed by actual computation; loop now discover→predict→evaluate→investigate→experiment |
