@@ -7,6 +7,8 @@ so the owner's standing instructions have somewhere durable to live instead of b
 
 1. **Read MetaProof `ledgers/OWNER-POLICY.md` first** — the owner's standing operating instructions across all
    eight repositories, verbatim, append-only.
+> **Additional semantic ingestion rule (2026-10-16):** Read [docs/SCIENTIFIC-INTERFACE-CONTRACT-2026-10-16.md](docs/SCIENTIFIC-INTERFACE-CONTRACT-2026-10-16.md); structural conservation, semantic claim extraction, inferential soundness, fact-matching, and empirical/historical validation have **separate contracts and oracles**. The June source plan explicitly tracked `actual_descent` vs derivability; don't rewrite that research history. Scientific audit hypotheses and source texts are not executable design approvals.
+
 2. **Then this repository's own `README.md`.** Role (MetaProof `ledgers/ROOT-SEED.md`, decision D-16): the
    structure-mapping engine — reads scientific results, represents their reasoning as an (object, attribute,
    relation) graph, and judges novelty / analogy / conjecture by relational structure rather than surface wording.
