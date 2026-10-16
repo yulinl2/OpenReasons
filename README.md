@@ -6,6 +6,8 @@
 
 **2026-10-16 owner scope:** OpenReasons is primarily a **claim/document decomposer and source-linked formal encoding instrument**, historically named OpenPriors. The [separate OpenPriors research programme](https://github.com/yulinl2/OpenPriors) owns its original [retrieval–bridge–residual v2 theory](https://github.com/yulinl2/OpenPriors/blob/main/sources/2026-10-16-owner-upload/Openpriors%20notes%20v2.md). Downstream structure matching, analogy and `1−coverage` are *experimental*; they do not define the tool or complete the research programme.
 
+**Scientific interface / interpretation guide:** [typed S0–S5 stages, evidence contracts and open questions](docs/SCIENTIFIC-INTERFACE-CONTRACT-2026-10-16.md). The [original June 13 experimental plan](https://github.com/yulinl2/OpenPriors/blob/main/sources/2026-10-16-owner-upload/2026-06-13-Sat-0742-openpriors-action-plan-cc-handoff-v1_0_md.md) already distinguishes historical inheritance from economical derivability. Do not attribute missing distinctions in a graph method to the original researcher's ignorance of them.
+
 **Measured limitation:** document-structural parsing is not general semantic claim recognition: MetaSci observed 0 `assert` nodes among 299 Markdown nodes in its independent audit. Grounding substrings also do not certify mathematical truth or derivability.
 
 **Historical description of the extended experimental toolchain:** OpenReasons reads scientific results, represents their **reasoning** as an (object, attribute,
