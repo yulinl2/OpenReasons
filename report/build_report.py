@@ -42,13 +42,18 @@ def build_markdown() -> str:
     lines: list = []
     w = lines.append
 
-    w("# OpenPriors — research audit report")
+    w("# OpenReasons — instrument fixture report")
     w("")
     w("> **Auto-generated** from the live pipeline by `report/build_report.py`. Every figure below is "
       "computed from the same code paths `make pipeline` runs — do not edit by hand; run "
       "`make report` to regenerate. A CI gate fails if this file is stale.")
     w("")
-    w("OpenPriors reads a body of mathematical results as one typed *(object, attribute, relation)* "
+    w("> **Evidence boundary (2026-10-16):** This report summarizes fixture-based tool "
+      "outputs, not OpenPriors' MDL novelty theory. A source-linked encoded fact or "
+      "experiment-module presence does not establish semantic claim completeness, "
+      "empirical outcome, or independent discovery.")
+    w("")
+    w("OpenReasons reads a body of mathematical results as one typed *(object, attribute, relation)* "
       "graph and runs a closed research loop over it: **discover → predict → evaluate → investigate "
       "→ experiment**. It situates each result among its priors, finds what it is structurally "
       "analogous to in another field, predicts what that analogy implies, tells the sound "
@@ -239,19 +244,19 @@ def build_markdown() -> str:
     # 8. the prediction ledger — the discover -> predict -> confirm arc
     led = build_ledger(REPO)
     ls = led["summary"]
-    w("## 8. Prediction ledger — the arc closes")
+    w("## 8. Conjecture ledger — post-hoc evidence")
     w("")
     w(f"The system is not only a novelty/analogy detector but an idea-generation-and-validation "
       f"engine. Of **{ls['n_conjectures']}** analogical conjectures it projected and judged "
       f"({ls['plausible']} plausible, {ls['uncertain']} uncertain, {ls['implausible']} "
       f"implausible), every uncertain one was refined into a research direction and carried to a "
-      f"numerical experiment, and the flagship prediction was confirmed against a real paper:")
+      f"numerical experiment *module*; the paper association was post-hoc:")
     w("")
     w("| conjecture | verdict | fate |")
     w("|---|---|---|")
     for e in led["entries"]:
         if e["confirmed_by"]:
-            fate = (f"**confirmed** by real paper `{e['confirmed_by']['paper']}` "
+            fate = (f"**post-hoc match** to curated paper `{e['confirmed_by']['paper']}` "
                     f"(structurally verified)")
         elif e["refined_into"]:
             fate = (f"→ research direction {e['refined_into']['id']} "
@@ -263,10 +268,10 @@ def build_markdown() -> str:
         w(f"| {e['id']} — {e['statement'][:56].rstrip()}… | {e['verdict']} | {fate} |")
     w("")
     w(f"The climax: **C6** — *\"the weighted conformal calibration procedure is a no-regret "
-      f"play\"* — was projected by analogy, judged plausible, and then **realized by a real "
-      f"published paper the system had never read** (Gibbs–Candès adaptive conformal inference), "
-      f"whose grounded facts verifiably contain the predicted no-regret play and the "
-      f"`NO_REGRET → COVERAGE` bridge. A prediction made by structure, confirmed by reality.")
+      f"play\"* — was proposed by analogy, but the evaluator already named Gibbs–Candès. "
+      f"The later ACI input was prepared with this expected mechanism, and "
+      f"its encoded facts include the named no-regret play and the "
+      f"`NO_REGRET → COVERAGE` bridge. This is a post-hoc consistency check, not a blind validation.")
     w("")
 
     # footer
