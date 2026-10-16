@@ -7,10 +7,6 @@ so the owner's standing instructions have somewhere durable to live instead of b
 
 1. **Read MetaProof `ledgers/OWNER-POLICY.md` first** — the owner's standing operating instructions across all
    eight repositories, verbatim, append-only.
-2. **Then this repository's own `README.md`.** Role (MetaProof `ledgers/ROOT-SEED.md`, decision D-16): the
-   structure-mapping engine — reads scientific results, represents their reasoning as an (object, attribute,
-   relation) graph, and judges novelty / analogy / conjecture by relational structure rather than surface wording.
-   Named OpenPriors until 2026-09-02; MetaSci's structure maps pin commit `49f62fb` of this repository.
-3. **Historical state warning (outdated as of 2026-10-16):** The former 'dormant since 2026-07-04' claim is false after PR #57 and later external uses (issue #61). Historical text below is a snapshot, not a current instruction. Previously this line claimed: pull requests #50–#54 are stale and tied to
-   a constitution MetaProof has since archived. Nothing here is queued work by default — check
-   `ledgers/ROOT-SEED.md` in MetaProof before assuming otherwise.
+2. **Repository role (owner's 2026-10-16 correction):** Start with this instrument's `decomposer/README.md`, `decomposer/src/decomposer/schema.py`, then `README.md`. OpenReasons is principally **scientific claim/document decomposition and source-linked formal encoding**, **not** the distinct OpenPriors research programme. Its SME/coverage/analogy tools are downstream experiments. Semantic claim recovery is still unproved (MetaSci 0 `assert` / 299 Markdown nodes).
+   Research source: https://github.com/yulinl2/OpenPriors/tree/main/sources/2026-10-16-owner-upload . MetaSci's historical structure-map tests pin `OpenReasons@49f62fb`; do not rename that executable ref.
+3. **2026-10-16 live-status rule:** “dormant since 2026-07-04” is a superseded snapshot ([issue #61](https://github.com/yulinl2/OpenReasons/issues/61)). Check current Issues, PRs and the MetaProof root before asserting active/inactive status. Historical `claude/openpriors-*` constitutional files are provenance records; do not silently treat them as current governing instructions.
