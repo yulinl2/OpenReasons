@@ -1,11 +1,10 @@
-# OpenPriors · grounding (Iteration 5 — the prose→dgroup front end)
+# OpenReasons · grounding (Iteration 5 — the prose→dgroup front end)
 
 The piece that makes the whole loop run on **raw text**: a sub-agent lifts natural-language
 statements into predicate-calculus **description groups**, a **deterministic grounding check**
 gates the extraction, and the [`analogy`](../analogy) engine solves by structure mapping.
 
-This closes the OpenPriors thesis end-to-end on prose:
-**decomposer → concept_graph → matcher → analogy**, now fed directly from text.
+This demonstrates a **bounded** prose→dgroup→analogy workflow on curated inputs. It does not close the separate OpenPriors theory end-to-end, guarantee general semantic claim recovery, or certify entailment.
 
 ## The demonstration (the four riddles)
 

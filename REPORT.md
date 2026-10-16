@@ -1,8 +1,10 @@
-# OpenPriors — research audit report
+# OpenReasons — instrument fixture report
 
 > **Auto-generated** from the live pipeline by `report/build_report.py`. Every figure below is computed from the same code paths `make pipeline` runs — do not edit by hand; run `make report` to regenerate. A CI gate fails if this file is stale.
 
-OpenPriors reads a body of mathematical results as one typed *(object, attribute, relation)* graph and runs a closed research loop over it: **discover → predict → evaluate → investigate → experiment**. It situates each result among its priors, finds what it is structurally analogous to in another field, predicts what that analogy implies, tells the sound predictions from the spurious, refines the open ones into research directions, and runs their proposed numerical experiments — every step grounded and CI-gated.
+> **Evidence boundary (2026-10-16):** This report summarizes fixture-based tool outputs, not OpenPriors' MDL novelty theory. A source-linked encoded fact or experiment-module presence does not establish semantic claim completeness, empirical outcome, or independent discovery.
+
+OpenReasons reads a body of mathematical results as one typed *(object, attribute, relation)* graph and runs a closed research loop over it: **discover → predict → evaluate → investigate → experiment**. It situates each result among its priors, finds what it is structurally analogous to in another field, predicts what that analogy implies, tells the sound predictions from the spurious, refines the open ones into research directions, and runs their proposed numerical experiments — every step grounded and CI-gated.
 
 At a glance: **5 literatures**, **12 results**, **40 cross-domain analogies**, **7 judged conjectures**, **4 research directions**, over a unified graph of **215 nodes / 517 edges**.
 
@@ -188,9 +190,9 @@ Direction C7 proposed quadratics f_t(x)=½(x−c_t)ᵀdiag(1,κ)(x−c_t) across
 
 The same curvature modulus drives both theorems through a lossy bridge: the informed step contracts geometrically at exactly 1−1/κ while the regret-optimal schedule (stable regret/log T) decays only polynomially (exponent −1) — a **price of robustness** that grows with conditioning and vanishes at κ=1; under drift the informed iterate tracks at exactly δ(κ−1), the contraction-plus-drift interpolation C7 proposed.
 
-## 8. Prediction ledger — the arc closes
+## 8. Conjecture ledger — post-hoc evidence
 
-The system is not only a novelty/analogy detector but an idea-generation-and-validation engine. Of **7** analogical conjectures it projected and judged (2 plausible, 4 uncertain, 1 implausible), every uncertain one was refined into a research direction and carried to a numerical experiment, and the flagship prediction was confirmed against a real paper:
+The system is not only a novelty/analogy detector but an idea-generation-and-validation engine. Of **7** analogical conjectures it projected and judged (2 plausible, 4 uncertain, 1 implausible), every uncertain one was refined into a research direction and carried to a numerical experiment *module*; the paper association was post-hoc:
 
 | conjecture | verdict | fate |
 |---|---|---|
@@ -199,10 +201,10 @@ The system is not only a novelty/analogy detector but an idea-generation-and-val
 | C3 — A finite-capacity / complexity-control premise underlies… | implausible | correctly rejected |
 | C4 — The ERM / uniform-convergence operator has a fixed point… | uncertain | → research direction C4 (promising), `experiment_c4` |
 | C5 — The no-regret online play has a fixed point - a limit ob… | uncertain | → research direction C5 (promising), `experiment_c5` |
-| C6 — The weighted conformal calibration procedure is a no-reg… | plausible | **confirmed** by real paper `adaptive_conformal_inference` (structurally verified) |
+| C6 — The weighted conformal calibration procedure is a no-reg… | plausible | **post-hoc match** to curated paper `adaptive_conformal_inference` (structurally verified) |
 | C7 — A curvature (strong-convexity) bound causes the offline… | uncertain | → research direction C7 (narrow), `experiment_c7` |
 
-The climax: **C6** — *"the weighted conformal calibration procedure is a no-regret play"* — was projected by analogy, judged plausible, and then **realized by a real published paper the system had never read** (Gibbs–Candès adaptive conformal inference), whose grounded facts verifiably contain the predicted no-regret play and the `NO_REGRET → COVERAGE` bridge. A prediction made by structure, confirmed by reality.
+The climax: **C6** — *"the weighted conformal calibration procedure is a no-regret play"* — was proposed by analogy, but the evaluator already named Gibbs–Candès. The later ACI input was prepared with this expected mechanism, and its encoded facts include the named no-regret play and the `NO_REGRET → COVERAGE` bridge. This is a post-hoc consistency check, not a blind validation.
 
 ## Reproducibility
 

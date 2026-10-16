@@ -40,7 +40,9 @@ def test_report_is_populated_from_the_live_pipeline():
     assert "C2 — contraction modulus" in md and "C4 — fixed-point uniform convergence" in md
     assert "C5 — OGD convergence/recurrence phase diagram" in md
     assert "C7 — regret vs. last-iterate" in md
-    assert "Prediction ledger — the arc closes" in md
+    assert "Conjecture ledger — post-hoc evidence" in md
+    assert "post-hoc consistency check, not a blind validation" in md
+    assert "experiment *module*" in md
     # the C4 experiment's confirmed fact (kappa < 1, root-n rate) is reported
     assert "κ=0.0210<1" in md and "1/√n" in md
 

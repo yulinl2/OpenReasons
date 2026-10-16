@@ -1,4 +1,4 @@
-# OpenPriors · graph (Epic M — the unified (object, attribute, relation) graph store)
+# OpenReasons · graph (Epic M — the unified (object, attribute, relation) graph store)
 
 The project's stated end goal is *"a package formally representing concepts and reasoning
 chains as an (object, attribute, relation) node/edge graph."* This package is that store. It
@@ -220,17 +220,14 @@ PYTHONPATH=graph/src:retrieval/src:analogy/src:grounding/src decomposer/.venv/bi
 
 ## Per-result novelty, on every node (`graphstore.novelty_graph`, Epic W)
 
-The project began as a novelty detector; this closes that thread at graph scale. Every result
-gets a precise **novelty score** — the IP-judge / MDL framing — against the most-covering known
-prior:
+Epic W supplies a **fixture-dependent matched-fact coverage proxy** under a chosen encoding, matching algorithm and prior set. It does **not** implement the [formal OpenPriors v2](https://github.com/yulinl2/OpenPriors/blob/main/sources/2026-10-16-owner-upload/Openpriors%20notes%20v2.md), conditional MDL, derivation distance, or an externally calibrated originality verdict:
 
 > `novelty(R) = 1 − maxₚ coverage(P → R)` over priors `P ≠ R` with `|P| ≤ |R|`
 
 where `coverage(P → R)` is the fraction of `R`'s facts that `P` explains (exact-functor SME,
 multiplicity-capped). The `|P| ≤ |R|` constraint stops a larger *descendant* from spuriously
 "covering" a smaller ancestor — a prior must be at least as general. The score is written onto
-each result node, and the remainder is the result's **residual** (its contribution over the
-nearest prior):
+each result node, and the remainder is the **unmatched encoded-fact residual**, not a verified scientific contribution:
 
 ```
 [7] per-result novelty (1 - best-prior coverage), written onto every result node:

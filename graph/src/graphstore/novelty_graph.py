@@ -1,8 +1,8 @@
 """Per-result novelty scoring across the unified graph (Epic W).
 
-The project began as a novelty detector; this closes that thread at graph scale. Every result
-in the unified graph gets a precise **novelty score** — the IP-judge / MDL framing — measured
-against the most-covering known prior:
+**Scope correction:** this is a representation-relative matched-fact coverage proxy.
+It does not compute conditional MDL, shortest derivation, chronology, or verified novelty.
+Under a chosen encoded corpus and mapping, it compares the best eligible candidate:
 
     novelty(R) = 1 - max over priors P (P != R, |P| <= |R|) of coverage(P -> R)
 
@@ -10,8 +10,7 @@ where coverage(P -> R) is the fraction of R's facts that P explains (exact-funct
 prior only covers same-field structure), capped by multiplicity. The constraint |P| <= |R|
 keeps a *larger* descendant from spuriously "covering" a smaller ancestor — a prior must be at
 least as general. A result with no covering prior (a field's base result) scores novelty 1.0;
-a near-copy of a known result scores ~0. The uncovered remainder is the result's genuine
-**residual** — its contribution over the nearest prior.
+a near-copy of a known result scores ~0. The uncovered remainder is an *unmatched encoded-fact residual*, not an independently established scientific contribution.
 
 Scores are written onto the result nodes, so the one graph also carries, for every result, how
 novel it is and what it builds on — the same signal the riddles / Banach / real-paper cases
