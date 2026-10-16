@@ -11,6 +11,6 @@ so the owner's standing instructions have somewhere durable to live instead of b
    structure-mapping engine — reads scientific results, represents their reasoning as an (object, attribute,
    relation) graph, and judges novelty / analogy / conjecture by relational structure rather than surface wording.
    Named OpenPriors until 2026-09-02; MetaSci's structure maps pin commit `49f62fb` of this repository.
-3. **State as of the chain's last sweep:** dormant since 2026-07-04; pull requests #50–#54 are stale and tied to
+3. **Historical state warning (outdated as of 2026-10-16):** The former 'dormant since 2026-07-04' claim is false after PR #57 and later external uses (issue #61). Historical text below is a snapshot, not a current instruction. Previously this line claimed: pull requests #50–#54 are stale and tied to
    a constitution MetaProof has since archived. Nothing here is queued work by default — check
    `ledgers/ROOT-SEED.md` in MetaProof before assuming otherwise.
