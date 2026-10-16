@@ -1,7 +1,7 @@
 """Third real paper end-to-end (Epic AI): Gibbs & Candes, Adaptive Conformal Inference.
 
 Parallels Epic K (arXiv 2006.06138, conformal) and Epic V (Nesterov, optimization), but with a
-twist that is the whole point: **the system predicted this paper before reading it.** Conjecture
+crucial caveat: **the C6 evaluator already named this known paper, and the later ACI input was annotated with expected relations.** Conjecture
 C6 (Epic AF), judged *plausible*, projected across the ``online_gradient_descent ~~
 weighted-conformal`` analogy that *"the weighted conformal calibration procedure is a no-regret
 play."* Gibbs & Candes (2021) is exactly that result in the real literature: an online gradient
@@ -99,10 +99,10 @@ def main(argv=None) -> int:
     for ok, msg in checks:
         if not ok:
             raise SystemExit(f"realpaper3 invariant violated: {msg}")
-    print(f"\n  confirmed: a real published paper the system PREDICTED — decomposed as a genuine "
+    print(f"\n  post-hoc match: curated known-paper facts align with the earlier annotated C6 relation — "
           f"cross-field\n  synthesis (online no-regret + conformal set), with the "
           f"no-regret->coverage bridge as its\n  contribution, sitting at the analogy junction "
-          f"of the two fields it unites. C6 realized.")
+          f"of the two fields it unites. This is not independent discovery.")
     return 0
 
 

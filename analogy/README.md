@@ -1,4 +1,4 @@
-# OpenPriors · analogy (Epic C / FAC — the novelty detector core)
+# OpenReasons · analogy (Epic C / FAC — experimental structure-mapping module)
 
 The **structure-mapping engine**: given two predicate-calculus description groups (a *base*
 and a *target*), it finds the best structure-preserving alignment, projects **candidate

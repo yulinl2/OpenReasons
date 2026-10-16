@@ -1,28 +1,16 @@
-"""The prediction ledger (Epic AJ): the discover -> predict -> confirm arc, made auditable.
+"""Conjecture/provenance ledger for a bounded graph-instrument demo.
 
-The whole project's thesis is that this is not just a novelty/analogy detector but an
-**idea-generation-and-validation engine**: it projects analogical conjectures (predictions),
-an independent judge tells the sound ones from the spurious, the uncertain ones are refined
-into precise research directions and each is carried to a numerical experiment — and, when a
-prediction is strong enough, it is confirmed against a real published paper.
+Four distinct evidentiary states MUST remain separate:
+  1. a module exists and exposes a runnable callable;
+  2. an experiment was actually executed (no evidence captured here);
+  3. a structured result/outcome was recorded (none captured here);
+  4. an independent validation was conducted (none captured here).
 
-This module cross-references the two halves that the rest of the pipeline built separately —
-the *prediction* side (``conjecture_evaluations.json`` + ``research_directions.json`` + the
-``experiment_c*`` modules) and the *confirmation* side (the real papers ingested in Epics K, V,
-AI) — into one ledger, and gates the arc:
-
-  * every conjecture carries a judged verdict, and the judge **discriminates** (at least one is
-    rejected as implausible — not a rubber stamp);
-  * every *uncertain* conjecture was **refined into a research direction** AND that direction
-    has a runnable **numerical experiment** (C2, C4, C5, C7 -> ``experiment_c{2,4,5,7}``);
-  * the flagship **confirmed** prediction — C6, *"the weighted conformal calibration procedure
-    is a no-regret play"* — is realized by a real ingested paper (Gibbs & Candes' adaptive
-    conformal inference), and this is **structurally verified**, not just asserted: the
-    confirming paper's grounded facts contain the predicted ``NO_REGRET`` play and the
-    ``NO_REGRET -> COVERAGE`` bridge the conjecture projected.
-
-So the ledger is the closing artifact: a machine-checkable record that the system predicted a
-result by analogy, and reality confirmed it in the system's own representation.
+Likewise, a later hand-authored paper dgroup sharing projected predicates is
+a POST-HOC STRUCTURAL MATCH, not independently confirmed paper discovery.
+The C6 evaluator already named Gibbs–Candès before ACI was lifted.
+Preserve the old fixture/structural gate while reporting the correct epistemic
+status. See OpenReasons issue #65 and the MetaProof 2026-09-29 audit.
 """
 
 from __future__ import annotations
@@ -89,20 +77,30 @@ def build_ledger(repo: Path) -> dict:
         cid = e["id"]
         entry = {"id": cid, "verdict": e["verdict"], "statement": e["statement"],
                  "analogy": f"{e['source_base']} -> {e['source_target']}",
-                 "refined_into": None, "experiment": None, "confirmed_by": None}
+                 "refined_into": None, "experiment": None, "confirmed_by": None,
+                 "experiment_evidence": {"module_present": False, "executed": False,
+                                         "outcome_recorded": False,
+                                         "independently_validated": False},
+                 "paper_evidence": {"post_hoc_structural_match": False,
+                                    "independent_confirmation": False}}
         if e["verdict"] == "uncertain" and cid in directions:
             entry["refined_into"] = {"id": cid, "scope": directions[cid]["scope_verdict"]}
             modname = f"graphstore.experiment_{cid.lower()}"
             try:
                 mod = importlib.import_module(modname)
                 entry["experiment"] = modname if hasattr(mod, "run_experiment") else None
+                entry["experiment_evidence"]["module_present"] = bool(entry["experiment"])
             except ModuleNotFoundError:
                 entry["experiment"] = None
         if cid in confirmations:
             paper = confirmations[cid]
             entry["confirmed_by"] = {
                 "paper": paper,
-                "structurally_verified": _confirms_structurally(repo, paper, e["projection"])}
+                "structurally_verified": _confirms_structurally(repo, paper, e["projection"]),
+                "evidence_type": "post_hoc_structural_match",
+                "independent_confirmation": False}
+            entry["paper_evidence"]["post_hoc_structural_match"] = bool(
+                entry["confirmed_by"]["structurally_verified"])
         entries.append(entry)
 
     verdicts = [e["verdict"] for e in evals]
@@ -114,8 +112,24 @@ def build_ledger(repo: Path) -> dict:
             "uncertain": verdicts.count("uncertain"),
             "implausible": verdicts.count("implausible"),
             "refined_into_directions": sum(1 for e in entries if e["refined_into"]),
-            "backed_by_experiment": sum(1 for e in entries if e["experiment"]),
-            "confirmed_by_real_paper": sum(1 for e in entries if e["confirmed_by"]),
+            "available_experiment_modules": sum(
+                1 for e in entries if e["experiment_evidence"]["module_present"]),
+            "experiments_executed_with_evidence": sum(
+                1 for e in entries if e["experiment_evidence"]["executed"]),
+            "experiment_outcomes_recorded": sum(
+                1 for e in entries if e["experiment_evidence"]["outcome_recorded"]),
+            "independently_validated_experiments": sum(
+                1 for e in entries if e["experiment_evidence"]["independently_validated"]),
+            "post_hoc_paper_matches": sum(
+                1 for e in entries if e["paper_evidence"]["post_hoc_structural_match"]),
+            "independent_paper_confirmations": sum(
+                1 for e in entries if e["paper_evidence"]["independent_confirmation"]),
+            # Legacy fields now bear their literal evidentiary meaning (not
+            # module existence or post-hoc paper links).
+            "backed_by_experiment": sum(
+                1 for e in entries if e["experiment_evidence"]["outcome_recorded"]),
+            "confirmed_by_real_paper": sum(
+                1 for e in entries if e["paper_evidence"]["independent_confirmation"]),
         },
     }
 
@@ -126,18 +140,21 @@ def main(argv=None) -> int:
     led = build_ledger(repo)
     s = led["summary"]
 
-    print("OpenPriors — prediction ledger: the discover -> predict -> confirm arc")
+    print("OpenReasons — evidence-tiered conjecture ledger (no blind confirmation claim)")
     print(f"  {s['n_conjectures']} analogical conjectures judged: "
           f"{s['plausible']} plausible, {s['uncertain']} uncertain, {s['implausible']} implausible")
     print(f"  {s['refined_into_directions']} uncertain -> refined into research directions, "
-          f"all {s['backed_by_experiment']} backed by a numerical experiment")
-    print(f"  {s['confirmed_by_real_paper']} confirmed by a real ingested paper\n")
+          f"{s['available_experiment_modules']} experiment modules available; "
+          f"{s['experiments_executed_with_evidence']} documented runs; "
+          f"{s['experiment_outcomes_recorded']} documented outcomes")
+    print(f"  {s['post_hoc_paper_matches']} post-hoc encoded-paper matches; "
+          f"{s['independent_paper_confirmations']} independent paper confirmations\n")
     for e in led["entries"]:
         tail = ""
         if e["refined_into"]:
             tail = f"  -> direction {e['refined_into']['id']} ({e['refined_into']['scope']}), {e['experiment']}"
         if e["confirmed_by"]:
-            tail = (f"  -> CONFIRMED by real paper '{e['confirmed_by']['paper']}'"
+            tail = (f"  -> POST-HOC MATCH to curated paper '{e['confirmed_by']['paper']}'"
                     f" (structurally verified: {e['confirmed_by']['structurally_verified']})")
         print(f"  {e['id']} [{e['verdict']:>11}] {e['statement'][:64]}{tail}")
 
@@ -150,20 +167,19 @@ def main(argv=None) -> int:
          "every uncertain conjecture must be refined into a research direction"),
         (all(e["experiment"] for e in led["entries"] if e["verdict"] == "uncertain"),
          "every research direction must have a runnable numerical experiment"),
-        (s["confirmed_by_real_paper"] >= 1,
-         "at least one prediction must be confirmed by a real ingested paper"),
+        (s["post_hoc_paper_matches"] >= 1,
+         "at least one fixture-level post-hoc match must be present"),
         (entries["C6"]["verdict"] == "plausible"
          and entries["C6"]["confirmed_by"]
          and entries["C6"]["confirmed_by"]["structurally_verified"],
-         "C6 (conformal calibration is a no-regret play) must be structurally confirmed by ACI"),
+         "C6 must have a fixture-level structural match to the curated ACI representation"),
     ]
     for ok, msg in checks:
         if not ok:
             raise SystemExit(f"prediction-ledger invariant violated: {msg}")
-    print(f"\n  confirmed: the system generates falsifiable predictions and validates them — "
-          f"the uncertain\n  ones refined and experimentally tested, the spurious ones rejected, "
-          f"and its flagship\n  prediction (C6) realized by a real published paper it had never "
-          f"read. The loop closes.")
+    print("\n  verified here: verdict labels, fixture-based structural match and "
+          "experiment module availability only. No experiment outcome or independent "
+          "prospective prediction is evidenced by this ledger.")
     return 0
 
 

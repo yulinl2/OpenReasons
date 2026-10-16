@@ -71,7 +71,7 @@ that discovers analogies *across literatures*, predicts, and self-evaluates.
 | **R–S** | `graph/` | **Capstone driver** (the whole chain as one command + one graph) and a **query DSL** (path / shared-ancestor / explain-analogy / conjecture lookup). |
 | **U** | `graph/` | A **fourth literature** (martingale concentration) joins the analogy web with **no new design** — its bounded-difference martingale is auto-discovered to play the same structural-property role → *…:: bounded-martingale : concentration*. |
 | **AC** | `graph/` | A **fifth literature** (online learning / regret) joins the same way — its **no-regret play** is auto-discovered at the identical `PC/2` structural-property role → *…:: no-regret play : sublinear regret*. Five fields, one mechanism, zero engine changes. |
-| **AI** | `graph/` | A **third real paper the system *predicted***: conjecture C6 (plausible) said "conformal calibration is a no-regret play"; **Gibbs–Candès Adaptive Conformal Inference** is that paper. It decomposes as a **cross-field synthesis** (online + conformal priors), its novel residual is the online α-update rule and the predicted `NO_REGRET→COVERAGE` bridge, and it sits at the analogy junction of both fields. Prediction validated against the real literature. |
+| **AI** | `graph/` | **Post-hoc ACI structural fixture**, not a blind prediction. C6's evaluator already named Gibbs–Candès before the subsequent ACI dgroup was authored with the expected no-regret/coverage relationship. The curated alignment is inspectable but cannot independently validate prospective discovery, complete claim extraction, or the OpenPriors MDL novelty objective. |
 
 ## Run the whole thing
 

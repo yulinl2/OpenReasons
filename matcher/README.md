@@ -1,4 +1,4 @@
-# OpenPriors · matcher (Epic C foundation)
+# OpenReasons · matcher (Epic C foundation)
 
 The structure-mapping retrieval layer. Consumes the [`concept_graph`](../concept_graph)
 output and provides the machinery a novelty detector needs:

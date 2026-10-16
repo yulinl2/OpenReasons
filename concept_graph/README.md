@@ -1,6 +1,6 @@
-# OpenPriors · concept_graph (Epic B)
+# OpenReasons · concept_graph (Epic B)
 
-Lifts the [`decomposer`](../decomposer) output (nodes + edges) into OpenPriors' target
+Lifts the [`decomposer`](../decomposer) output (nodes + edges) into the historically specified
 **(object, attribute, relation)** representation — concepts (objects with attributes),
 typed relations, and a **reasoning-chain DAG** — and emits the exact structures a
 structure-mapping matcher (Epic C) consumes. Deterministic, independently verified, $0 cost.

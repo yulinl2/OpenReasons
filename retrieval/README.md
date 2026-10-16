@@ -1,4 +1,4 @@
-# OpenPriors · retrieval (Epic E — library-scale MAC/FAC novelty retrieval)
+# OpenReasons · retrieval (Epic E — MAC/FAC structural-reuse baseline)
 
 The project's answer to the *indexing burden* (`Imports/structure mapping notes.md` §3,
 *"Many Are Called, Few Are Chosen"*): you cannot run expensive SME against every known prior,
@@ -111,7 +111,7 @@ FAC quantifies the reuse at 78%, and set-cover isolates the residual: `COUNTERFA
 conformal prediction and applies it to *counterfactual* outcomes (under unconfoundedness, the
 likelihood-ratio weights are the inverse propensity score) and then *nests* the construction
 to get intervals for the individual treatment effect. The system reads the borrowed machinery
-as borrowed and points at the genuinely new structure — on a real paper, automatically.
+as covered within a hand-encoded result representation and points at the unmatched encoded facts; independent semantic contribution is not established.
 
 ```bash
 PYTHONPATH=retrieval/src:analogy/src:grounding/src decomposer/.venv/bin/python -m retrieval.realpaper
